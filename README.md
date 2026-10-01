@@ -31,3 +31,19 @@ will be fragmented, and then those fragments will be fragmented again. I wouldn'
 **Sorting Layer**: The sorting layer you wish the fragments to be set to
 
 **Order In Layer**: The order in layer you wish the fragments to be set to
+
+## Crust port
+
+This fork is being ported to C with [crust](https://github.com/brentharts/crust):
+the runtime scripts only (the Editor code is not part of it). The MonoBehaviours
+go through crust's unity_pack; the fracture geometry (`Unity-delaunay`,
+`clipper_library`) through crust's C# subset; the fragments' physics through
+[Box2D-Packed](https://github.com/crustos/box2d).
+
+* `[MaxInstances(N)]` (`Scripts/MaxInstancesAttribute.cs`) marks a class of
+  which at most N exist at once. Unity ignores it; crust allocates such a class
+  from an arena of N slots -- a reference is a plain pointer, as in C# -- and
+  sizes unity_pack's tables to N. `Explodable` is `[MaxInstances(255)]`.
+* Clone this repository beside crust and its fast tests check the port
+  (`python3 tools/unity_pack_test_fast.py TestUnity2DDestruction`); crust's
+  UNITY_PACK.md, "Unity-2D-Destruction", has the status.
