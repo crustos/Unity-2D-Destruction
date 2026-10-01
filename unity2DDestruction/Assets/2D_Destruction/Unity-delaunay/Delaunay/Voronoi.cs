@@ -1,4 +1,4 @@
-/*
+﻿/*
  * The author of this software is Steven Fortune.  Copyright (c) 1994 by AT&T
  * Bell Laboratories.
  * Permission to use, copy, modify, and distribute this software for any
@@ -163,9 +163,13 @@ namespace Delaunay
 		
 		private List<Edge> HullEdges ()
 		{
-			return _edges.FindAll (delegate (Edge edge) {
-				return (edge.IsPartOfConvexHull ());
-			});
+			List<Edge> hull = new List<Edge> ();
+			for (int i = 0; i < _edges.Count; i++) {
+				if (_edges [i].IsPartOfConvexHull ()) {
+					hull.Add (_edges [i]);
+				}
+			}
+			return hull;
 		}
 
 		public List<Vector2> HullPointsInOrder ()

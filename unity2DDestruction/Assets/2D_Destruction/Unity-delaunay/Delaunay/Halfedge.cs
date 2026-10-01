@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
 using Delaunay.LR;
@@ -9,6 +9,7 @@ namespace Delaunay
 {
 
 	
+	[MaxInstances(6144)]
 	public sealed class Halfedge: Delaunay.Utils.IDisposable
 	{
 		private static Stack<Halfedge> _pool = new Stack<Halfedge> ();
@@ -50,10 +51,12 @@ namespace Delaunay
 			return this;
 		}
 		
+#if !CRUST
 		public override string ToString ()
 		{
 			return "Halfedge (leftRight: " + leftRight.ToString () + "; vertex: " + vertex.ToString () + ")";
 		}
+#endif
 		
 		public void Dispose ()
 		{

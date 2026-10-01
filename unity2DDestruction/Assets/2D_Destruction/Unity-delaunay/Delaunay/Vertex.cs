@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
 using Delaunay.LR;
@@ -6,6 +6,7 @@ using Delaunay.LR;
 namespace Delaunay
 {
 	
+	[MaxInstances(2048)]
 	public sealed class Vertex: ICoord
 	{
 		public static readonly Vertex VERTEX_AT_INFINITY = new Vertex (float.NaN, float.NaN);
@@ -56,10 +57,12 @@ namespace Delaunay
 			_vertexIndex = _nvertices++;
 		}
 		
+#if !CRUST
 		public override string ToString ()
 		{
 			return "Vertex (" + _vertexIndex + ")";
 		}
+#endif
 
 		/**
 		 * This is the only way to make a Vertex

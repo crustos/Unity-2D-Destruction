@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
 using Delaunay.Geo;
@@ -23,6 +23,7 @@ namespace Delaunay
 		 * @author ashaw
 		 * 
 		 */
+	[MaxInstances(3072)]
 	public sealed class Edge
 	{
 		private static Stack<Edge> _pool = new Stack<Edge> ();
@@ -263,12 +264,14 @@ namespace Delaunay
 			_sites = new Dictionary<Side,Site> ();
 		}
 			
+#if !CRUST
 		public override string ToString ()
 		{
 			return "Edge " + _edgeIndex.ToString () + "; sites " + _sites [Side.LEFT].ToString () + ", " + _sites [Side.RIGHT].ToString ()
 				+ "; endVertices " + ((_leftVertex != null) ? _leftVertex.vertexIndex.ToString () : "null") + ", "
 				+ ((_rightVertex != null) ? _rightVertex.vertexIndex.ToString () : "null") + "::";
 		}
+#endif
 
 		/**
 			 * Set _clippedVertices to contain the two ends of the portion of the Voronoi edge that is visible

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
 using Delaunay.Geo;
@@ -7,6 +7,7 @@ using Delaunay.LR;
 namespace Delaunay
 {
 		
+	[MaxInstances(1024)]
 	public sealed class Site: ICoord, IComparable
 	{
 		private static Stack<Site> _pool = new Stack<Site> ();
@@ -121,10 +122,12 @@ namespace Delaunay
 			return this;
 		}
 		
+#if !CRUST
 		public override string ToString ()
 		{
 			return "Site " + _siteIndex.ToString () + ": " + Coord.ToString ();
 		}
+#endif
 		
 		private void Move (Vector2 p)
 		{
