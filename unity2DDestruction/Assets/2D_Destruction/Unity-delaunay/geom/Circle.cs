@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 
 namespace Delaunay
@@ -16,10 +16,12 @@ namespace Delaunay
 				this.radius = radius;
 			}
 		
+#if !CRUST
 			public override string ToString ()
 			{
 				return "Circle (center: " + center.ToString () + "; radius: " + radius.ToString () + ")";
 			}
+#endif
 
 		}
 	}
