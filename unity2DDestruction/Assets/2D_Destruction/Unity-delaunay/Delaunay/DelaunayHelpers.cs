@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
 using Delaunay.Geo;
@@ -7,6 +7,7 @@ using Delaunay.LR;
 namespace Delaunay
 {	
 
+	[MaxInstances(1024)]
 	public class Node
 	{
 		public static Stack<Node> pool = new Stack<Node> ();
@@ -41,10 +42,15 @@ namespace Delaunay
 
 		public static List<Edge> SelectEdgesForSitePoint (Vector2 coord, List<Edge> edgesToTest)
 		{
-			return edgesToTest.FindAll (delegate (Edge edge) {
-				return ((edge.leftSite != null && edge.leftSite.Coord == coord)
-					|| (edge.rightSite != null && edge.rightSite.Coord == coord));
-			});
+			List<Edge> selected = new List<Edge> ();
+			for (int i = 0; i < edgesToTest.Count; i++) {
+				Edge edge = edgesToTest [i];
+				if ((edge.leftSite != null && edge.leftSite.Coord == coord)
+					|| (edge.rightSite != null && edge.rightSite.Coord == coord)) {
+					selected.Add (edge);
+				}
+			}
+			return selected;
 		}
 
 		public static List<Edge> SelectNonIntersectingEdges (/*keepOutMask:BitmapData,*/List<Edge> edgesToTest)
